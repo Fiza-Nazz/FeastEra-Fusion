@@ -49,6 +49,10 @@ const PageContainer = styled.div`
   background: 
     radial-gradient(circle at 10% 20%, ${theme.primary}20, transparent 30%),
     radial-gradient(circle at 90% 80%, ${theme.secondary}20, transparent 30%);
+    
+  @media (max-width: 768px) {
+    padding: 2rem 1rem;
+  }
 `;
 
 const HeaderSection = styled(motion.div)`
@@ -58,6 +62,9 @@ const HeaderSection = styled(motion.div)`
 
   h1 {
     font-size: 3.5rem;
+    @media (max-width: 768px) {
+      font-size: 2.5rem;
+    }
     font-family: 'Pacifico', cursive;
     color: ${theme.headingColor};
     margin-bottom: 1.5rem;
@@ -78,6 +85,9 @@ const FormCard = styled(motion.div)`
   background: ${theme.cardBg};
   border-radius: 30px;
   padding: 3.5rem;
+  @media (max-width: 768px) {
+    padding: 2rem;
+  }
   border: 1px solid ${theme.primary};
   max-width: 800px;
   margin: 0 auto;
@@ -144,6 +154,17 @@ const TimeSlotGrid = styled.div`
   grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
   gap: 1.2rem;
   margin: 2rem 0;
+`;
+
+// New responsive grid component to replace inline grid layouts
+const TwoColumnGrid = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
 `;
 
 const TimeSlotButton = styled(motion.button)<{ selected?: boolean }>`
@@ -344,7 +365,7 @@ const ReservationPage = () => {
         >
           <form onSubmit={handleSubmit(onSubmit)}>
             {/* Input Fields */}
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem' }}>
+            <TwoColumnGrid>
               <InputGroup>
                 <IconWrapper>
                   <FiUser size={22} />
@@ -370,10 +391,10 @@ const ReservationPage = () => {
                   style={{ borderColor: errors.email ? theme.primary : '' }}
                 />
               </InputGroup>
-            </div>
+            </TwoColumnGrid>
 
             {/* Date and Time Section */}
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem' }}>
+            <TwoColumnGrid>
               <InputGroup>
                 <IconWrapper>
                   <FiCalendar size={22} />
@@ -398,7 +419,7 @@ const ReservationPage = () => {
                   style={{ cursor: 'pointer' }}
                 />
               </InputGroup>
-            </div>
+            </TwoColumnGrid>
 
             {/* Time Slots Grid */}
             <TimeSlotGrid>
@@ -417,7 +438,7 @@ const ReservationPage = () => {
             </TimeSlotGrid>
 
             {/* Guest Counter and Phone */}
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem' }}>
+            <TwoColumnGrid>
               <InputGroup>
                 <GuestCounter>
                   <CounterButton
@@ -448,7 +469,7 @@ const ReservationPage = () => {
                   type="tel"
                 />
               </InputGroup>
-            </div>
+            </TwoColumnGrid>
 
             {/* Special Requests */}
             <InputGroup>

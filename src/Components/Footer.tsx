@@ -75,10 +75,13 @@ const Footer = () => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          className="mb-16 text-center"
+          className="mb-16 text-center px-2 sm:px-0"
         >
           <h3 className="text-3xl font-bold text-pink-600 mb-4">Stay Updated</h3>
-          <form onSubmit={handleSubmit(handleNewsletter)} className="max-w-2xl mx-auto flex gap-4">
+          <form
+            onSubmit={handleSubmit(handleNewsletter)}
+            className="max-w-2xl mx-auto flex flex-col sm:flex-row gap-4"
+          >
             <input
               {...register('email', { required: true })}
               type="email"
@@ -90,7 +93,7 @@ const Footer = () => {
               whileTap={{ scale: 0.95 }}
               type="submit"
               disabled={isSubmitting}
-              className="px-8 py-3 bg-pink-600 text-white rounded-full font-medium hover:bg-pink-700 transition-colors flex items-center gap-2"
+              className="px-8 py-3 bg-pink-600 text-white rounded-full font-medium hover:bg-pink-700 transition-colors flex items-center justify-center gap-2"
             >
               {isSubmitting ? (
                 <div className="h-5 w-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
@@ -105,7 +108,7 @@ const Footer = () => {
         </motion.div>
 
         {/* Footer Content Grid */}
-        <div className="grid md:grid-cols-4 gap-8 mb-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 mb-12">
           {footerLinks.map((section, index) => (
             <motion.div
               key={section.title}
@@ -162,7 +165,7 @@ const Footer = () => {
                 >
                   <Icon className="w-6 h-6" />
                   <span className="absolute -top-8 left-1/2 -translate-x-1/2 bg-pink-600 text-white px-2 py-1 rounded-md 
-                    text-xs opacity-0 group-hover:opacity-100 transition-opacity">
+                    text-xs opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
                     {name}
                   </span>
                 </motion.a>
@@ -212,8 +215,3 @@ const Footer = () => {
 };
 
 export default Footer;
-
-
-
-
-

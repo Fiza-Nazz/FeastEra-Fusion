@@ -31,9 +31,7 @@ const Hero = () => {
 
   // Navigation handlers
   const handleOrderNow = () => {
-    // Dynamic ID example (replace with actual ID from your data)
-    const orderId = "65a8f2e1d9c3e8b4d6f3b2a1"; 
-    router.push(`/order/${orderId}`);
+   router.push('/menu');
   };
 
   const handleHowItWorks = () => {

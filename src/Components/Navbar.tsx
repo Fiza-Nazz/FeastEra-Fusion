@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { FiShoppingCart, FiSearch, FiChevronDown, FiX, FiMenu } from 'react-icons/fi';
 import Image from 'next/image';
-import { motion, AnimatePresence, LayoutGroup } from 'framer-motion';
+import { motion, AnimatePresence, LayoutGroup, Variants } from 'framer-motion';
 
 interface MenuItem {
   id: number;
@@ -16,9 +16,14 @@ interface MenuItem {
   description: string;
 }
 
-interface StaggerVariants {
+/** Extend Variants so TS accepts function-based variant definitions */
+interface StaggerVariants extends Variants {
   hidden: { opacity: number; y: number };
-  visible: (i: number) => { opacity: number; y: number; transition: { delay: number } };
+  visible: (custom: number) => {
+    opacity: number;
+    y: number;
+    transition: { delay: number };
+  };
 }
 
 const Navbar = () => {
@@ -104,42 +109,42 @@ const Navbar = () => {
     <nav className={`fixed w-full z-50 transition-all duration-300 ${isScrolled ? 'shadow-xl' : ''}`} style={{ background: WHITE }}>
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-20">
-        <motion.div 
-  initial={{ scale: 0 }}
-  animate={{ scale: 1 }}
-  className="relative group"
-  whileHover={{ scale: 1.05 }}
->
-  <Link href="/" className="relative z-10 flex items-center gap-2">
-    {/* Chef Cap Sticker */}
-    <motion.div
-      className="w-12 h-12 rounded-full bg-pink-100 flex items-center justify-center shadow-lg"
-      animate={{ rotate: [0, 10, -10, 0] }}
-      transition={{ duration: 2, repeat: Infinity }}
-    >
-      <span className="text-2xl">👩‍🍳</span>
-      <div className="absolute -top-1 -right-2 w-5 h-5 bg-pink-300 rounded-full" />
-    </motion.div>
+          <motion.div 
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            className="relative group"
+            whileHover={{ scale: 1.05 }}
+          >
+            <Link href="/" className="relative z-10 flex items-center gap-2">
+              {/* Chef Cap Sticker */}
+              <motion.div
+                className="w-12 h-12 rounded-full bg-pink-100 flex items-center justify-center shadow-lg"
+                animate={{ rotate: [0, 10, -10, 0] }}
+                transition={{ duration: 2, repeat: Infinity }}
+              >
+                <span className="text-2xl">👩‍🍳</span>
+                <div className="absolute -top-1 -right-2 w-5 h-5 bg-pink-300 rounded-full" />
+              </motion.div>
 
-    {/* Text Logo */}
-    <div className="flex flex-col relative">
-      <span className="text-4xl font-bold bg-gradient-to-r from-[#FF007A] to-[#FF4DA6] bg-clip-text text-transparent 
+              {/* Text Logo */}
+              <div className="flex flex-col relative">
+                <span className="text-4xl font-bold bg-gradient-to-r from-[#FF007A] to-[#FF4DA6] bg-clip-text text-transparent 
                       font-['Bebas_Neue'] tracking-wider drop-shadow-sm">
-        FEASTERA
-      </span>
-      <span className="text-xs text-pink-400 -mt-1 font-medium"></span>
-      
-      {/* Accent Element */}
-      <motion.div
-        className="absolute -right-4 -top-2"
-        animate={{ rotate: [0, 15, -15, 0] }}
-        transition={{ duration: 2, repeat: Infinity }}
-      >
-        <div className="w-4 h-4 bg-pink-300 rounded-full" />
-      </motion.div>
-    </div>
-  </Link>
-</motion.div>
+                  FEASTERA
+                </span>
+                <span className="text-xs text-pink-400 -mt-1 font-medium"></span>
+                
+                {/* Accent Element */}
+                <motion.div
+                  className="absolute -right-4 -top-2"
+                  animate={{ rotate: [0, 15, -15, 0] }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                >
+                  <div className="w-4 h-4 bg-pink-300 rounded-full" />
+                </motion.div>
+              </div>
+            </Link>
+          </motion.div>
 
           {/* Desktop Menu */}
           <div className="hidden lg:flex items-center gap-8 flex-1 justify-center">
@@ -341,7 +346,11 @@ const Navbar = () => {
                         className="mt-4 max-h-60 overflow-y-auto"
                       >
                         {searchResults.map(item => (
-                          <Link key={item.id} href={`/product/${item.id}`} className="flex items-center gap-4 p-4 hover:bg-pink-50 border-b border-pink-100">
+                          <Link 
+                            key={item.id} 
+                            href={`/product/${item.id}`} 
+                            className="flex items-center gap-4 p-4 hover:bg-pink-50 border-b border-pink-100"
+                          >
                             <Image 
                               src={item.image} 
                               alt={item.name} 
