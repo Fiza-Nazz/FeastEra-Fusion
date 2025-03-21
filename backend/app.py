@@ -1,3 +1,4 @@
+import os
 from flask import Flask, jsonify
 from flask_cors import CORS
 
@@ -5,7 +6,6 @@ app = Flask(__name__)
 CORS(app)
 
 menu_items = [
-   
     {
         "id": 1,
         "name": "Classic Cheeseburger",
@@ -60,8 +60,7 @@ menu_items = [
         "rating": 4.9,
         "description": "Two beef patties with double cheese and bacon"
     },
-
-    # Pizzas (6 Varieties)
+    # Pizzas
     {
         "id": 7,
         "name": "Margherita Classic",
@@ -116,8 +115,7 @@ menu_items = [
         "rating": 4.8,
         "description": "Truffle oil, wild mushrooms and parmesan"
     },
-
-    # Drinks (6 Varieties)
+    # Drinks
     {
         "id": 13,
         "name": "Classic Mojito",
@@ -172,8 +170,7 @@ menu_items = [
         "rating": 4.7,
         "description": "Pineapple and coconut milk mocktail"
     },
-
-    # Sweets (6 Varieties)
+    # Sweets
     {
         "id": 19,
         "name": "Chocolate Lava Cake",
@@ -228,8 +225,7 @@ menu_items = [
         "rating": 4.9,
         "description": "Fluffy pancakes with Nutella drizzle"
     },
-
-    # Rolls (6 Varieties)
+    # Rolls
     {
         "id": 25,
         "name": "Chicken Spring Roll",
@@ -291,4 +287,5 @@ def get_menu():
     return jsonify(menu_items)
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port, debug=True)
