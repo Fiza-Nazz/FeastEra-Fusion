@@ -29,7 +29,8 @@ const MenuPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/menu');
+        // --- yahan apna deployed backend ka URL use karen ---
+        const response = await fetch('https://feast-era-backend.onrender.com/api/menu');
         if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
         const data = await response.json();
         setMenuItems(data);
@@ -193,11 +194,13 @@ const MenuPage = () => {
                 onClick={() => toggleFavorite(item.id)}
                 className="absolute top-4 right-4 z-10 bg-white/90 p-2 rounded-full shadow-sm"
               >
-                <FiHeart className={`text-lg ${
-                  favorites.includes(item.id) 
-                    ? 'text-red-500 fill-current' 
-                    : 'text-gray-600'
-                }`} />
+                <FiHeart
+                  className={`text-lg ${
+                    favorites.includes(item.id)
+                      ? 'text-red-500 fill-current'
+                      : 'text-gray-600'
+                  }`}
+                />
               </motion.button>
 
               <div className="relative h-64 overflow-hidden">
@@ -229,11 +232,15 @@ const MenuPage = () => {
                     {[...Array(5)].map((_, i) => (
                       <FiStar
                         key={i}
-                        className={`text-sm ${i < Math.floor(item.rating) ? 'fill-current' : ''}`}
+                        className={`text-sm ${
+                          i < Math.floor(item.rating) ? 'fill-current' : ''
+                        }`}
                       />
                     ))}
                   </div>
-                  <span className="text-sm text-gray-500">({item.rating.toFixed(1)})</span>
+                  <span className="text-sm text-gray-500">
+                    ({item.rating.toFixed(1)})
+                  </span>
                   <div className="flex items-center text-gray-500">
                     <FiClock className="mr-1" />
                     <span className="text-sm">20-25 mins</span>
