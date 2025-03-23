@@ -29,7 +29,8 @@ const MenuPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/menu');
+        // Updated to use Next.js API Route
+        const response = await fetch('/api/menu');
         if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
         const data = await response.json();
         setMenuItems(data);
@@ -67,31 +68,33 @@ const MenuPage = () => {
     localStorage.setItem('favorites', JSON.stringify(newFavorites));
   };
 
-  if (loading) return (
-    <div className="min-h-screen bg-gradient-to-b from-pink-100 to-white flex items-center justify-center">
-      <motion.div
-        animate={{ rotate: 360 }}
-        transition={{ duration: 1, repeat: Infinity }}
-        className="h-16 w-16 border-4 border-pink-200 border-t-pink-500 rounded-full"
-      />
-    </div>
-  );
-
-  if (error) return (
-    <div className="min-h-screen bg-pink-50 flex items-center justify-center p-8">
-      <div className="text-center max-w-md">
-        <GiForkKnifeSpoon className="text-6xl text-pink-500 mx-auto mb-4" />
-        <h2 className="text-2xl font-bold text-gray-800 mb-4">Oops! Kitchen Closed</h2>
-        <p className="text-gray-600 mb-6">{error}</p>
-        <button
-          onClick={() => window.location.reload()}
-          className="bg-pink-500 text-white px-6 py-2 rounded-full hover:bg-pink-600 transition-colors"
-        >
-          Try Again
-        </button>
+  if (loading)
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-pink-100 to-white flex items-center justify-center">
+        <motion.div
+          animate={{ rotate: 360 }}
+          transition={{ duration: 1, repeat: Infinity }}
+          className="h-16 w-16 border-4 border-pink-200 border-t-pink-500 rounded-full"
+        />
       </div>
-    </div>
-  );
+    );
+
+  if (error)
+    return (
+      <div className="min-h-screen bg-pink-50 flex items-center justify-center p-8">
+        <div className="text-center max-w-md">
+          <GiForkKnifeSpoon className="text-6xl text-pink-500 mx-auto mb-4" />
+          <h2 className="text-2xl font-bold text-gray-800 mb-4">Oops! Kitchen Closed</h2>
+          <p className="text-gray-600 mb-6">{error}</p>
+          <button
+            onClick={() => window.location.reload()}
+            className="bg-pink-500 text-white px-6 py-2 rounded-full hover:bg-pink-600 transition-colors"
+          >
+            Try Again
+          </button>
+        </div>
+      </div>
+    );
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-pink-100 to-white">
@@ -142,9 +145,7 @@ const MenuPage = () => {
                 <h2 className="text-2xl font-bold mb-2">{selectedItem.name}</h2>
                 <p className="text-gray-600 mb-4">{selectedItem.description}</p>
                 <div className="flex justify-between items-center">
-                  <span className="text-2xl font-bold text-pink-500">
-                    ₨{selectedItem.price}
-                  </span>
+                  <span className="text-2xl font-bold text-pink-500">₨{selectedItem.price}</span>
                   <button
                     className="bg-pink-500 text-white px-6 py-2 rounded-full hover:bg-pink-600 flex items-center gap-2"
                     onClick={() => {
@@ -169,9 +170,7 @@ const MenuPage = () => {
           <h1 className="text-5xl font-bold text-pink-500 mb-4 font-great-vibes">
             FeastEra
           </h1>
-          <h2 className="text-3xl font-semibold text-gray-800">
-            Our Special Menu
-          </h2>
+          <h2 className="text-3xl font-semibold text-gray-800">Our Special Menu</h2>
           <div className="mt-4 flex justify-center">
             <div className="w-24 h-1 bg-pink-500 rounded-full" />
           </div>
@@ -193,11 +192,13 @@ const MenuPage = () => {
                 onClick={() => toggleFavorite(item.id)}
                 className="absolute top-4 right-4 z-10 bg-white/90 p-2 rounded-full shadow-sm"
               >
-                <FiHeart className={`text-lg ${
-                  favorites.includes(item.id) 
-                    ? 'text-red-500 fill-current' 
-                    : 'text-gray-600'
-                }`} />
+                <FiHeart
+                  className={`text-lg ${
+                    favorites.includes(item.id)
+                      ? 'text-red-500 fill-current'
+                      : 'text-gray-600'
+                  }`}
+                />
               </motion.button>
 
               <div className="relative h-64 overflow-hidden">
@@ -229,11 +230,15 @@ const MenuPage = () => {
                     {[...Array(5)].map((_, i) => (
                       <FiStar
                         key={i}
-                        className={`text-sm ${i < Math.floor(item.rating) ? 'fill-current' : ''}`}
+                        className={`text-sm ${
+                          i < Math.floor(item.rating) ? 'fill-current' : ''
+                        }`}
                       />
                     ))}
                   </div>
-                  <span className="text-sm text-gray-500">({item.rating.toFixed(1)})</span>
+                  <span className="text-sm text-gray-500">
+                    ({item.rating.toFixed(1)})
+                  </span>
                   <div className="flex items-center text-gray-500">
                     <FiClock className="mr-1" />
                     <span className="text-sm">20-25 mins</span>
@@ -249,14 +254,11 @@ const MenuPage = () => {
                   animate={{ opacity: 1 }}
                   className="flex justify-between items-center"
                 >
-                  <span className="text-2xl font-bold text-pink-500">
-                    ₨{item.price}
-                  </span>
+                  <span className="text-2xl font-bold text-pink-500">₨{item.price}</span>
                   <motion.button
                     whileTap={{ scale: 0.95 }}
                     whileHover={{ scale: 1.05 }}
-                    className="bg-pink-500 text-white px-6 py-2 rounded-full hover:bg-pink-600 
-                      flex items-center gap-2 transition-colors text-sm"
+                    className="bg-pink-500 text-white px-6 py-2 rounded-full hover:bg-pink-600 flex items-center gap-2 transition-colors text-sm"
                     onClick={() => handleAddToCart(item)}
                   >
                     <FiShoppingCart className="text-lg" />

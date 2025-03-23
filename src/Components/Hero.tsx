@@ -29,13 +29,32 @@ const Hero = () => {
     }
   };
 
+  // 3D Button Animation settings
+  const button3DHover = {
+    scale: 1.05,
+    rotateX: 10,
+    rotateY: 10,
+    boxShadow: `0px 20px 30px rgba(0, 0, 0, 0.2)`
+  };
+
+  const button3DTap = {
+    scale: 0.95,
+    rotateX: 0,
+    rotateY: 0,
+    boxShadow: `0px 10px 15px rgba(0, 0, 0, 0.1)`
+  };
+
   // Navigation handlers
   const handleOrderNow = () => {
-   router.push('/menu');
+    router.push('/menu');
   };
 
   const handleHowItWorks = () => {
     router.push('/how-it-works');
+  };
+
+  const handleLogin = () => {
+    router.push('/login');
   };
 
   return (
@@ -75,15 +94,21 @@ const Hero = () => {
               Experience culinary excellence delivered to your doorstep. Order from 1000+ restaurants with just a few clicks.
             </motion.p>
 
-            <motion.div variants={itemVariants} className="flex gap-4 mb-8">
+            <motion.div
+              variants={itemVariants}
+              className="flex gap-4 mb-8"
+              // Preserve 3D space for buttons
+              style={{ perspective: 600 }}
+            >
               <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+                whileHover={button3DHover}
+                whileTap={button3DTap}
                 onClick={handleOrderNow}
                 className="flex items-center gap-2 px-8 py-4 rounded-full font-bold text-white transition-all"
                 style={{ 
                   background: PINK,
-                  boxShadow: `0 8px 24px ${PINK}40`
+                  boxShadow: `0 8px 24px ${PINK}40`,
+                  transformStyle: 'preserve-3d'
                 }}
               >
                 Order Now
@@ -91,17 +116,35 @@ const Hero = () => {
               </motion.button>
 
               <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+                whileHover={button3DHover}
+                whileTap={button3DTap}
                 onClick={handleHowItWorks}
                 className="flex items-center gap-2 px-8 py-4 rounded-full font-bold border-2 transition-all"
                 style={{ 
                   borderColor: PINK, 
                   color: PINK,
-                  boxShadow: `0 4px 12px ${PINK}20`
+                  boxShadow: `0 4px 12px ${PINK}20`,
+                  background: 'transparent',
+                  transformStyle: 'preserve-3d'
                 }}
               >
                 How It Works
+              </motion.button>
+
+              <motion.button
+                whileHover={button3DHover}
+                whileTap={button3DTap}
+                onClick={handleLogin}
+                className="flex items-center gap-2 px-8 py-4 rounded-full font-bold border-2 transition-all"
+                style={{
+                  borderColor: PINK,
+                  color: PINK,
+                  background: 'transparent',
+                  boxShadow: `0 4px 12px ${PINK}20`,
+                  transformStyle: 'preserve-3d'
+                }}
+              >
+                Login
               </motion.button>
             </motion.div>
 
@@ -150,6 +193,18 @@ const Hero = () => {
           </motion.div>
         </motion.div>
       </div>
+
+      {/* Mobile-only Login Button */}
+      <motion.div className="lg:hidden fixed bottom-4 left-0 right-0 px-4">
+        <motion.button
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          onClick={handleLogin}
+          className="w-full py-4 rounded-xl border-2 border-pink-700 text-pink-700 font-bold transition-colors"
+        >
+          Login
+        </motion.button>
+      </motion.div>
     </section>
   );
 };

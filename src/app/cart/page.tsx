@@ -91,11 +91,11 @@ const CartPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-pink-50 to-white py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-white py-12 px-4 sm:px-6 lg:px-8">
       <motion.h1
         initial={{ opacity: 0, y: -30 }}
         animate={{ opacity: 1, y: 0 }}
-        className="text-4xl font-bold text-center text-pink-600 mb-10 flex items-center justify-center gap-3"
+        className="text-4xl sm:text-5xl font-bold text-center text-pink-600 mb-10 flex items-center justify-center gap-3"
       >
         <FiShoppingCart className="w-10 h-10" />
         Your Shopping Cart
@@ -152,16 +152,16 @@ const CartPage = () => {
                     transition={{ delay: index * 0.1 }}
                     className="p-4 bg-pink-50 rounded-xl border border-pink-100"
                   >
-                    <div className="flex gap-4">
-                    
-                      
-                      <Image 
-                        src={item.image} 
-                        alt={item.name} 
-                        width={96} 
-                        height={96} 
-                        className="w-24 h-24 object-cover rounded-lg shadow-md border-2 border-pink-200"
-                      />
+                    <div className="flex flex-col sm:flex-row gap-4">
+                      <div className="flex-shrink-0">
+                        <Image 
+                          src={item.image} 
+                          alt={item.name} 
+                          width={96} 
+                          height={96} 
+                          className="w-24 h-24 sm:w-28 sm:h-28 object-cover rounded-lg shadow-md border-2 border-pink-200"
+                        />
+                      </div>
                       <div className="flex-1">
                         <div className="flex justify-between items-start">
                           <div>
@@ -202,8 +202,7 @@ const CartPage = () => {
                             placeholder="Special requests"
                             value={item.specialInstructions || ''}
                             onChange={(e) => handleSpecialInstructions(item.id, e.target.value)}
-                            className="w-full px-3 py-2 text-sm border border-pink-200 rounded-lg 
-                            focus:ring-2 focus:ring-pink-300 outline-none"
+                            className="w-full px-3 py-2 text-black text-sm border border-pink-200 rounded-lg focus:ring-2 focus:ring-pink-300 outline-none placeholder:text-gray-500"
                             rows={2}
                           />
                         </div>
@@ -220,7 +219,7 @@ const CartPage = () => {
               animate={{ opacity: 1, y: 0 }}
               className="bg-white rounded-2xl shadow-xl p-6"
             >
-              <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
+              <h3 className="text-xl font-bold text-pink-600 mb-4 flex items-center gap-2">
                 <FiClock className="text-pink-500" />
                 Delivery Time
               </h3>
@@ -228,14 +227,14 @@ const CartPage = () => {
                 {timeSlots.map((slot, index) => (
                   <button
                     key={index}
-                    className={`p-3 text-left rounded-xl border ${
+                    className={`p-3 text-left rounded-xl border transition-colors ${
                       activeAccordion === `time-${index}` 
                         ? 'border-pink-500 bg-pink-50' 
                         : 'border-gray-200 hover:border-pink-300'
                     }`}
                     onClick={() => setActiveAccordion(`time-${index}`)}
                   >
-                    <span className="font-medium">{slot}</span>
+                    <span className="font-medium text-pink-600">{slot}</span>
                   </button>
                 ))}
               </div>
@@ -250,11 +249,11 @@ const CartPage = () => {
               animate={{ opacity: 1, x: 0 }}
               className="bg-white rounded-2xl shadow-xl p-6"
             >
-              <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
+              <h3 className="text-xl font-bold text-pink-600 mb-4 flex items-center gap-2">
                 📝 Order Summary
               </h3>
               
-              <div className="space-y-3">
+              <div className="space-y-3 text-pink-600">
                 <div className="flex justify-between">
                   <span>Subtotal ({cartItems.length} items)</span>
                   <span>₨{subtotal.toFixed(2)}</span>
@@ -281,17 +280,15 @@ const CartPage = () => {
               animate={{ opacity: 1, x: 0 }}
               className="bg-white rounded-2xl shadow-xl p-6"
             >
-              <div className="flex gap-2">
+              <div className="flex flex-col sm:flex-row gap-2">
                 <input
                   type="text"
                   placeholder="Enter promo code"
                   value={promoCode}
                   onChange={(e) => setPromoCode(e.target.value)}
-                  className="flex-1 px-4 py-2 border border-pink-200 rounded-lg focus:ring-2 
-                  focus:ring-pink-300 outline-none"
+                  className="flex-1 px-4 py-2 text-black border border-pink-200 rounded-lg focus:ring-2 focus:ring-pink-300 outline-none placeholder:text-gray-500"
                 />
-                <button className="bg-pink-500 text-white px-4 py-2 rounded-lg hover:bg-pink-600 
-                transition-colors flex items-center gap-2">
+                <button className="bg-pink-500 text-white px-4 py-2 rounded-lg hover:bg-pink-600 transition-colors flex items-center gap-2">
                   <FiGift className="w-5 h-5" />
                   Apply
                 </button>
@@ -304,43 +301,37 @@ const CartPage = () => {
               animate={{ opacity: 1, x: 0 }}
               className="bg-white rounded-2xl shadow-xl p-6"
             >
-              <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
+              <h3 className="text-xl font-bold text-pink-600 mb-4 flex items-center gap-2">
                 <FiMapPin className="text-pink-500" />
                 Delivery Info
               </h3>
-
               <div className="space-y-3">
                 <input
                   type="text"
                   placeholder="Street Address"
                   value={deliveryDetails.address}
-                  onChange={(e) => setDeliveryDetails({...deliveryDetails, address: e.target.value})}
-                  className="w-full px-3 py-2 border border-pink-200 rounded-lg focus:ring-2 
-                  focus:ring-pink-300 outline-none"
+                  onChange={(e) => setDeliveryDetails({ ...deliveryDetails, address: e.target.value })}
+                  className="w-full px-3 py-2 text-black border border-pink-200 rounded-lg focus:ring-2 focus:ring-pink-300 outline-none placeholder:text-gray-500"
                 />
                 <input
                   type="text"
                   placeholder="City"
                   value={deliveryDetails.city}
-                  onChange={(e) => setDeliveryDetails({...deliveryDetails, city: e.target.value})}
-                  className="w-full px-3 py-2 border border-pink-200 rounded-lg focus:ring-2 
-                  focus:ring-pink-300 outline-none"
+                  onChange={(e) => setDeliveryDetails({ ...deliveryDetails, city: e.target.value })}
+                  className="w-full px-3 py-2 text-black border border-pink-200 rounded-lg focus:ring-2 focus:ring-pink-300 outline-none placeholder:text-gray-500"
                 />
                 <input
                   type="text"
                   placeholder="Zip Code"
                   value={deliveryDetails.zipCode}
-                  onChange={(e) => setDeliveryDetails({...deliveryDetails, zipCode: e.target.value})}
-                  className="w-full px-3 py-2 border border-pink-200 rounded-lg focus:ring-2 
-                  focus:ring-pink-300 outline-none"
+                  onChange={(e) => setDeliveryDetails({ ...deliveryDetails, zipCode: e.target.value })}
+                  className="w-full px-3 py-2 text-black border border-pink-200 rounded-lg focus:ring-2 focus:ring-pink-300 outline-none placeholder:text-gray-500"
                 />
                 <textarea
                   placeholder="Special delivery notes"
                   value={deliveryDetails.deliveryInstructions}
-                  onChange={(e) => setDeliveryDetails({...deliveryDetails, 
-                    deliveryInstructions: e.target.value})}
-                  className="w-full px-3 py-2 border border-pink-200 rounded-lg focus:ring-2 
-                  focus:ring-pink-300 outline-none"
+                  onChange={(e) => setDeliveryDetails({ ...deliveryDetails, deliveryInstructions: e.target.value })}
+                  className="w-full px-3 py-2 text-black border border-pink-200 rounded-lg focus:ring-2 focus:ring-pink-300 outline-none placeholder:text-gray-500"
                   rows={3}
                 />
               </div>
@@ -352,14 +343,12 @@ const CartPage = () => {
               animate={{ opacity: 1, x: 0 }}
               className="bg-white rounded-2xl shadow-xl p-6"
             >
-              <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
+              <h3 className="text-xl font-bold text-pink-600 mb-4 flex items-center gap-2">
                 <FiCreditCard className="text-pink-500" />
                 Payment
               </h3>
-
               <div className="space-y-3">
-                <label className="flex items-center gap-3 p-3 border border-pink-200 rounded-lg 
-                hover:border-pink-300 cursor-pointer">
+                <label className="flex items-center gap-3 p-3 border border-pink-200 rounded-lg hover:border-pink-300 cursor-pointer text-pink-600">
                   <input
                     type="radio"
                     name="payment"
@@ -370,9 +359,7 @@ const CartPage = () => {
                   />
                   Credit/Debit Card
                 </label>
-
-                <label className="flex items-center gap-3 p-3 border border-pink-200 rounded-lg 
-                hover:border-pink-300 cursor-pointer">
+                <label className="flex items-center gap-3 p-3 border border-pink-200 rounded-lg hover:border-pink-300 cursor-pointer text-pink-600">
                   <input
                     type="radio"
                     name="payment"
@@ -383,9 +370,7 @@ const CartPage = () => {
                   />
                   PayPal
                 </label>
-
-                <label className="flex items-center gap-3 p-3 border border-pink-200 rounded-lg 
-                hover:border-pink-300 cursor-pointer">
+                <label className="flex items-center gap-3 p-3 border border-pink-200 rounded-lg hover:border-pink-300 cursor-pointer text-pink-600">
                   <input
                     type="radio"
                     name="payment"
@@ -404,12 +389,10 @@ const CartPage = () => {
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               onClick={handleConfirmOrder}
-              className="w-full bg-gradient-to-r from-pink-500 to-pink-600 text-white py-4 rounded-xl
-              font-bold text-lg hover:shadow-lg hover:shadow-pink-200 transition-all flex items-center 
-              justify-center gap-2"
+              className="w-full bg-gradient-to-r from-pink-500 to-pink-600 text-white py-4 rounded-xl font-bold text-lg hover:shadow-lg hover:shadow-pink-200 transition-all flex items-center justify-center gap-2"
             >
               <FiCreditCard className="w-6 h-6" />
-              Confirm & Pay ₨{total.toFixed(2)}
+              Confirm &amp; Pay ₨{total.toFixed(2)}
             </motion.button>
 
             {/* Security Assurance */}
@@ -442,7 +425,7 @@ const OrderConfirmationView = ({ deliveryDetails, deliveryTime, total, router }:
   <motion.div
     initial={{ opacity: 0, scale: 0.9 }}
     animate={{ opacity: 1, scale: 1 }}
-    className="max-w-2xl mx-auto bg-gradient-to-br from-pink-50 to-white rounded-3xl shadow-2xl p-8"
+    className="max-w-2xl mx-auto bg-white rounded-3xl shadow-2xl p-8"
   >
     <div className="text-center">
       <div className="text-6xl mb-4">🎀</div>
@@ -451,20 +434,23 @@ const OrderConfirmationView = ({ deliveryDetails, deliveryTime, total, router }:
         Your items will arrive in{' '}
         <span className="font-bold text-pink-600">{deliveryTime} minutes</span>
       </p>
-      
       <div className="bg-white rounded-xl p-6 shadow-md mt-6 text-left border-l-4 border-pink-400">
         <h3 className="text-xl font-bold mb-4">Order Details</h3>
         <div className="space-y-2">
-          <p><span className="font-semibold">Address:</span> {deliveryDetails.address}</p>
-          <p><span className="font-semibold">City:</span> {deliveryDetails.city}</p>
-          <p><span className="font-semibold">Total:</span> ₨{total.toFixed(2)}</p>
+          <p>
+            <span className="font-semibold">Address:</span> {deliveryDetails.address}
+          </p>
+          <p>
+            <span className="font-semibold">City:</span> {deliveryDetails.city}
+          </p>
+          <p>
+            <span className="font-semibold">Total:</span> ₨{total.toFixed(2)}
+          </p>
         </div>
       </div>
-
       <button
         onClick={() => router.push('/')}
-        className="mt-8 bg-pink-500 text-white px-8 py-3 rounded-full font-bold hover:bg-pink-600 
-        transition-colors flex items-center gap-2 mx-auto"
+        className="mt-8 bg-pink-500 text-white px-8 py-3 rounded-full font-bold hover:bg-pink-600 transition-colors flex items-center gap-2 mx-auto"
       >
         Continue Shopping
         <FiChevronDown className="w-5 h-5 transform rotate-90" />

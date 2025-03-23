@@ -64,11 +64,12 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Fetch menu items from Flask backend
+  // Fetch menu items from Next.js API backend
   useEffect(() => {
     const fetchMenuItems = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/menu');
+        // Updated API endpoint URL
+        const response = await fetch('/api/menu');
         const data = await response.json();
         setAllMenuItems(data);
       } catch (error) {
@@ -126,12 +127,15 @@ const Navbar = () => {
                 <div className="absolute -top-1 -right-2 w-5 h-5 bg-pink-300 rounded-full" />
               </motion.div>
 
-              {/* Text Logo */}
+              {/* Updated Text Logo with Great Vibes Font */}
               <div className="flex flex-col relative">
-                <span className="text-4xl font-bold bg-gradient-to-r from-[#FF007A] to-[#FF4DA6] bg-clip-text text-transparent 
-                      font-['Bebas_Neue'] tracking-wider drop-shadow-sm">
+                <motion.span
+                  whileHover={{ rotateX: 10, rotateY: 10, scale: 1.05 }}
+                  className="text-3xl font-semibold bg-gradient-to-r from-[#FF007A] to-[#FF4DA6] bg-clip-text text-transparent tracking-wider drop-shadow-md font-great-vibes"
+                >
                   FEASTERA
-                </span>
+                </motion.span>
+                {/* Agar aap koi tagline add karna chahein toh niche use kar sakte hain */}
                 <span className="text-xs text-pink-400 -mt-1 font-medium"></span>
                 
                 {/* Accent Element */}
@@ -282,24 +286,6 @@ const Navbar = () => {
               </motion.span>
             </motion.button>
 
-            {/* Auth Button */}
-            <div className="hidden lg:flex ml-4">
-              <motion.div whileHover={{ scale: 1.05 }}>
-                <Link
-                  href="/login"
-                  className="px-8 py-3 rounded-full font-bold text-white shadow-lg hover:shadow-xl transition-all"
-                  style={{ 
-                    background: PINK,
-                    boxShadow: '0 4px 6px rgba(255, 0, 122, 0.2)',
-                    minWidth: '120px',
-                    textAlign: 'center'
-                  }}
-                >
-                  Login
-                </Link>
-              </motion.div>
-            </div>
-
             {/* Mobile Menu Button */}
             <motion.button
               onClick={() => setMenuOpen(!isMenuOpen)}
@@ -348,7 +334,7 @@ const Navbar = () => {
                         {searchResults.map(item => (
                           <Link 
                             key={item.id} 
-                            href={`/product/${item.id}`} 
+                            href={`/menu/${item.id}`} 
                             className="flex items-center gap-4 p-4 hover:bg-pink-50 border-b border-pink-100"
                           >
                             <Image 
@@ -417,6 +403,13 @@ const Navbar = () => {
           )}
         </AnimatePresence>
       </div>
+      
+      <style jsx global>{`
+        @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
+        .font-great-vibes {
+          font-family: 'Great Vibes', cursive;
+        }
+      `}</style>
     </nav>
   );
 };

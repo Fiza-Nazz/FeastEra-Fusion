@@ -74,7 +74,7 @@ export default function HowItWorksPage() {
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
-          className="relative z-10 text-center"
+          className="relative z-10 text-center px-4"
         >
           <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-pink-700 to-pink-900">
             Seamless Food Journey
@@ -95,7 +95,7 @@ export default function HowItWorksPage() {
         {steps.map((step, index) => (
           <motion.section
             key={index}
-            className="grid md:grid-cols-2 gap-12 items-center mb-32 relative"
+            className="grid md:grid-cols-2 gap-12 items-center mb-32 relative px-4"
             initial={{ opacity: 0, x: index % 2 === 0 ? 100 : -100 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-100px" }}
@@ -109,17 +109,19 @@ export default function HowItWorksPage() {
             />
 
             <motion.div
-              className={`relative ${index % 2 === 0 ? 'md:order-1' : 'md:order-2'}`}
+              className={`relative ${index % 2 === 0 ? 'md:order-1' : 'md:order-2'} w-full`}
               whileHover={{ scale: 1.02 }}
             >
-              <div className="absolute inset-0 bg-gradient-to-r from-pink-100 to-white rounded-3xl" />
-              <Image
-                src={step.image}
-                alt={step.title}
-                layout="fill"
-                objectFit="cover"
-                className="relative z-10 w-full h-96 rounded-3xl shadow-2xl"
-              />
+              <div className="relative h-96 overflow-hidden rounded-3xl shadow-2xl">
+                <div className="absolute inset-0 bg-gradient-to-r from-pink-100 to-white rounded-3xl" />
+                {/* Updated Image component usage */}
+                <Image
+                  src={step.image}
+                  alt={step.title}
+                  fill
+                  className="object-cover relative z-10 rounded-3xl"
+                />
+              </div>
             </motion.div>
 
             <motion.div 
@@ -188,7 +190,7 @@ export default function HowItWorksPage() {
 
         {/* Animated FAQ */}
         <motion.div
-          className="max-w-4xl mx-auto mt-32"
+          className="max-w-4xl mx-auto mt-32 px-4"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
         >
